@@ -2,6 +2,7 @@ from fastapi import FastAPI, Request, requests, Form
 from fastapi.responses import HTMLResponse
 from fastapi.staticfiles import StaticFiles
 from fastapi.templating import Jinja2Templates
+import conex
 
 
 app = FastAPI()
@@ -18,7 +19,14 @@ async def root(request: Request):
 
 @app.post("/login")
 async def login(request: Request, username: str = Form(), password: str = Form()):
-    return templates.TemplateResponse("aviso.html", {"request" : request , "username": username})
+   ''' mycursor = conex.mydb.cursor()
+    sql = "SELECT * FROM login WHERE colaborador = username and senha = password"
+    mycursor.execute(sql)
+    myresult = mycursor.fetchall()
+    if myresult == 1:
+        return templates.TemplateResponse("login.html", {"request" : request , "login": 1})
+    else:
+        return templates.TemplateResponse("login.html", {"request": request, "login": 0})'''
 
 
 if __name__ == '__mail__':

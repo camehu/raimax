@@ -50,7 +50,7 @@ label {
   transform: translateY(4px);
 }
 
-#spinner{
-    display: none;
+#spnFooter{
+  display:none;
 
 }
