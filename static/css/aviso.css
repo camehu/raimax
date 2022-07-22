@@ -1,0 +1,87 @@
+body {background-color:#004FC1}
+
+img{
+    float:left;
+    display: inline-flex;
+}
+
+h2{
+    text-align: center;
+    color: white;
+    margin-right: 180px;
+}
+
+td, th{
+    border: 1px solid black;
+    padding: 5px;
+    border-radius: 5px;
+    text-align: center;
+}
+
+tr:hover {background-color: #D6EEEE;}
+
+table{
+    border: 1px solid black;
+    margin: 3% 15% 3% 15%;
+    width:70%;
+    background-color: #9FB6CD;
+    border-radius: 5px;
+    height:460px;
+}
+
+button {
+	display: inline-block;
+    font-size:8;
+	cursor: pointer;
+	text-align: center;
+	text-decoration: none;
+	outline: none;
+	color: #fff;
+	background-color: slategrey;
+	border: none;
+	border-radius: 6px;
+	box-shadow: 0 3px #999;
+	margin:2% 0 0;
+}
+
+button:hover {background-color: #4F4F4F}
+
+button:active {
+  background-color: #4F4F4F;
+  box-shadow: 0 0px #666;
+  transform: translateY(4px);
+}
+
+/*BOTÃO DE PAGINAÇÃO*/
+
+nav{
+    margin-left: 986px;
+    margin-top: -32px;
+}
+
+ul.pagination { 
+    display: inline-block; 
+    padding: 0; 
+    border: 1px solid black;
+}
+
+ul.pagination li { 
+  display: inline; 
+}
+
+ul.pagination li a{ 
+    color: black; 
+    float: left;
+    padding: 6px 12px; 
+    text-decoration: none; 
+}
+
+ul.pagination li a.active { 
+    background-color: #4F4F4F; 
+    color: white; 
+}
+
+ul.pagination li a:hover:not(.active) {
+    background-color: slategrey;
+}
+/*BOTÃO DE PAGINAÇÃO*/
