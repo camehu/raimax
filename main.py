@@ -19,7 +19,7 @@ async def root(request: Request):
 
 @app.post("/login")
 async def login(request: Request, username: str = Form(), password: str = Form()):
-       return templates.TemplateResponse("usuarios.html", {"request": request})
+    return templates.TemplateResponse("usuarios.html", {"request": request})
 
 
 @app.get("/usuarios", response_class=HTMLResponse)
