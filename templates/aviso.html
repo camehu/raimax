@@ -28,56 +28,41 @@
         <th style="width:60%">Problema</th>
         <th style="width:20%">Informações</th>
     </tr>
+ {% for user in users %}
     <tr>
-        <td>{{username}}</td>
-        <td></td>
+        <td>{{user[1]}}</td>
+        <td>{{user[2]}}</td>
+        <td>{{user[3]}}</td>
         <td><button data-toggle="modal" data-target="#myModal">+ Informações</button></td>
     </tr>
-    <tr>
-        <td></td>
-        <td></td>
-        <td><button  >+ Informações</button></td>
-    </tr>
-    <tr>
-        <td></td>
-        <td></td>
-        <td><button>+ Informações</button></td>
-    </tr>
-    <tr>
-        <td></td>
-        <td></td>
-        <td><button>+ Informações</button></td>
-    </tr>
-    <tr>
-        <td></td>
-        <td></td>
-        <td><button>+ Informações</button></td>
-    </tr>
-    <tr>
-        <td></td>
-        <td></td>
-        <td><button>+ Informações</button></td>
-    </tr>
-    <tr>
-        <td></td>
-        <td></td>
-        <td><button>+ Informações</button></td>
-    </tr>
-    <tr>
-        <td></td>
-        <td></td>
-        <td><button>+ Informações</button></td>
-    </tr>
-    <tr>
-        <td></td>
-        <td></td>
-        <td><button>+ Informações</button></td>
-    </tr>
-    <tr>
-        <td></td>
-        <td></td>
-        <td><button>+ Informações</button></td>
-    </tr>
+
+    <!-- The Modal -->
+  <div class="modal" id="myModal">
+    <div class="modal-dialog">
+      <div class="modal-content">
+
+        <!-- Modal Header -->
+        <div class="modal-header">
+          <h4 class="modal-title">Descrição</h4>
+
+        </div>
+
+        <!-- Modal body -->
+        <div class="modal-body">
+
+          Modal body.. {{user[3]}}
+
+        </div>
+
+        <!-- Modal footer -->
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secundary" data-dismiss="modal">Close</button>
+        </div>
+
+      </div>
+    </div>
+  </div>
+ {% endfor %}
 
 </table>
 
@@ -104,30 +89,8 @@
  </div>
 
 
- <!-- The Modal -->
-  <div class="modal" id="myModal">
-    <div class="modal-dialog">
-      <div class="modal-content">
 
-        <!-- Modal Header -->
-        <div class="modal-header">
-          <h4 class="modal-title">Descrição</h4>
 
-        </div>
-
-        <!-- Modal body -->
-        <div class="modal-body">
-          Modal body..
-        </div>
-
-        <!-- Modal footer -->
-        <div class="modal-footer">
-          <button type="button" class="btn btn-secundary" data-dismiss="modal">Close</button>
-        </div>
-
-      </div>
-    </div>
-  </div>
 
 </body>
 

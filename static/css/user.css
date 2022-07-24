@@ -1,0 +1,35 @@
+.flex-container{
+    display: flex;
+    background-color:#004FC1;
+	margin:0%;
+	width:100wv;
+	height:100vh;
+	justify-content: center;
+	align-items: start;
+	
+
+
+}
+
+#divcentro{
+	
+	width:800px;
+	height: auto;
+	background-color: #FFFFFF;
+	padding:1em;
+	margin-top:5em;
+	border-radius: 5px;
+	box-shadow: 2px 2px #DCDCDC;
+	
+	
+}
+
+h4{
+	text-align:center;
+	color: #4CAF50;
+}
+
+nav{
+	background-color: black;
+	
+}
