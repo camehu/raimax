@@ -32,6 +32,8 @@ async def login(request: Request, username: str = Form(), password: str = Form()
     except:
         return templates.TemplateResponse("index.html", {"request": request})'''
 
+     return templates.TemplateResponse("usuarios.html", {"request": request, "users": myresult})
+
 
 @app.get("/usuarios", response_class=HTMLResponse)
 async def root(request: Request):
