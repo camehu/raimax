@@ -19,20 +19,7 @@ async def root(request: Request):
 
 @app.post("/login")
 async def login(request: Request, username: str = Form(), password: str = Form()):
-   '''mycursor = conex.mydb.cursor()
-   mycursor.execute(f"SELECT * FROM login WHERE colaborador = '{username}' and senha = '{password}' ")
-   myresult = mycursor.fetchall()
-   for lgn in myresult:
-    try:
-      if lgn[1] == username and lgn[2] == password:
-          mycursor = conex.mydb.cursor()
-          mycursor.execute(f"SELECT * FROM login")
-          myresult = mycursor.fetchall()
-          return templates.TemplateResponse("usuarios.html", {"request": request, "users": myresult})
-    except:
-        return templates.TemplateResponse("index.html", {"request": request})'''
-
-     return templates.TemplateResponse("usuarios.html", {"request": request})
+       return templates.TemplateResponse("usuarios.html", {"request": request})
 
 
 @app.get("/usuarios", response_class=HTMLResponse)
