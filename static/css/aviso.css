@@ -54,10 +54,6 @@ button:active {
 
 /*BOTÃO DE PAGINAÇÃO*/
 
-nav{
-    margin-left: 986px;
-    margin-top: -32px;
-}
 
 ul.pagination { 
     display: inline-block; 

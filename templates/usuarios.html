@@ -17,19 +17,17 @@
       <span class="navbar-toggler-icon"></span>
     </button>
     <div class="collapse navbar-collapse nav justify-content-end" id="collapsibleNavbar">
-      <ul class="navbar-nav navbar-dark">
-          
-           <li class="nav-item">
-              <a class="nav-link" href="#">Olá, Carlos</a>
-            </li>
+      <ul class="navbar-nav navbar-dark justify-content-end">
 
-        <li class="nav-item dropdown">
-          <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown">Cadastrar</a>
-          <ul class="dropdown-menu">
-            <li><a class="dropdown-item" href="#">Usuario</a></li>
-            <li><a class="dropdown-item" href="/aviso">Aviso</a></li>
-          </ul>
-        </li>
+            <li class="nav-item">
+              <a class="nav-link" href="#">Olá, Suporte</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="aviso">Avisos</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="usuarios">Usuarios</a>
+            </li>
 
       </ul>
     </div>
@@ -37,41 +35,39 @@
 </nav>
 
 <div class="flex-container">
+
         <div id="divcentro">
         <h4>Usuários Cadastrados</h4>
 
 
         <table class="table">
 
-            <p><button type="button" class="btn btn-primary btn-sm" data-bs-toggle="modal" data-bs-target="#myModalNovoUsuario">Novo Usuário</button></p>
+            <p><button type="button" class="btn btn-primary btn-sm" data-bs-toggle="modal" data-bs-target="#myModalNovoUsuario">Novo</button></p>
     <thead>
       <tr>
         <th>ID</th>
         <th>Usuario</th>
-        <th>Apelido</th>
         <th>Senha</th>
-         <th>Tipo</th>
+        <th>Apelido</th>
+        <th>Tipo</th>
       </tr>
     </thead>
     <tbody>
-       <tr>
-        <td>1</td>
-        <td>Diogo Pereira</td>
-        <td>Adm</td>
-        <td><button data-toggle="modal" data-target="#myModal">+ Informações</button></td>
-        </tr>
-        
-        <tr>
-        <td>2</td>
-        <td>João Pedro</td>
-        <td>Adm</td>
-        <td><button data-toggle="modal" data-target="#myModal">+ Informações</button></td>
-    </tr>
+      {% for usr in login %}
+          <tr>
+            <td>{{usr[0]}}</td>
+            <td>{{usr[1]}}</td>
+            <td>{{usr[2]}}</td>
+            <td>{{usr[3]}}</td>
+            <td> <a class="btn btn-secondary btn-sm modal-trigger" data-bs-toggle="modal" data-bs-target="#myModal{{usr[0]}}">Visualizar</a></td>
+            <td> <button type="submit" class="btn btn" data-bs-toggle="modal" data-bs-target="#myModalDELETAR{{usr[0]}}">Deletar</button></td>
 
-             <!-- Button to Open the Modal -->
+          </tr>
+
+             <!-- EDITAR -->
 
             <!-- The Modal -->
-            <div class="modal" id="myModal">
+            <div class="modal" id="myModal{{usr[0]}}">
               <div class="modal-dialog">
                 <div class="modal-content">
 
@@ -83,23 +79,94 @@
 
                   <!-- Modal body -->
                   <div class="modal-body">
-                    Modal body.. 
+                                    <form action="editar" method="post">
+                                        <div class="mb-1 mt-1">
+                                            <label class="form-label">ID:</label>
+                                            <input type="text" class="form-control "  name="id" value={{usr[0]}} required>
+                                          </div>
+
+                                          <div class="mb-3 mt-3">
+                                            <label class="form-label">Colaborador:</label>
+                                            <input type="text" class="form-control"  name="username" value={{usr[1]}} required>
+                                          </div>
+                                          <div class="mb-3">
+                                            <label for="pwd" class="form-label">Password:</label>
+                                            <input type="text" class="form-control"   name="password" value={{usr[2]}} required >
+                                          </div>
+                                        <div class="mb-3">
+                                            <label for="pwd" class="form-label">Apelido:</label>
+                                            <input type="text" class="form-control"   name="nickname" value={{usr[3]}} required>
+                                          </div>
+
+                                          <div class="mb-3">
+                                            <label for="pwd" class="form-label">Tipo:</label>
+                                            <input type="text" class="form-control"   name="tipo" value={{usr[4]}} required>
+                                          </div>
+
+                                          <button type="submit" class="btn btn-warning">Editar</button>
+
+                                        </form>
+
+                                   </div>
+                      </div>
+                  </div>
+               </div>
+
+       <!-- Modal DELETAR-->
+
+     <!-- The Modal -->
+            <div class="modal" id="myModalDELETAR{{usr[0]}}">
+              <div class="modal-dialog">
+                <div class="modal-content">
+
+                  <!-- Modal Header -->
+                  <div class="modal-header">
+                    <h4 class="modal-title">DELETAR </h4>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
                   </div>
 
-               </div>
-              </div>
-            </div>
+                  <!-- Modal body -->
+                  <div class="modal-body">
+                                    <form action="deletar" method="post">
+                                        <div class="mb-1 mt-1">
+                                            <label class="form-label">ID:</label>
+                                            <input type="text" class="form-control "  name="id" value={{usr[0]}}>
+                                          </div>
 
-  
+                                          <div class="mb-3 mt-3">
+                                            <label class="form-label">Colaborador:</label>
+                                            <input type="text" class="form-control"  name="username" value={{usr[1]}}>
+                                          </div>
+
+
+                                        <button type="button" class="btn btn-warning">Não</button>
+                                        <button type="submit" class="btn btn">SIM</button>
+                                        </form>
+
+                                   </div>
+                      </div>
+                  </div>
+               </div>
+
+     {%endfor%}
 
     </tbody>
+
+
   </table>
+            {% if USER == 1: %}
+               <div class="alert alert-success alert-dismissible fade show">
+            <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+            <strong>Success!</strong> Usuario Cadastrado com Sucesso!.
+             </div>
+
+    {%  endif %}
 
         </div>
 </div>
 
 
-<!-- The Modal -->
+<!-- NOVO USUSARIO -->
 <div class="modal" id="myModalNovoUsuario">
   <div class="modal-dialog">
     <div class="modal-content">
@@ -112,14 +179,34 @@
 
       <!-- Modal body -->
       <div class="modal-body">
-        Modal body..
-      </div>
+            <form action="usuarios" method="post">
+                  <div class="mb-3 mt-3">
+                    <label class="form-label">Colaborador:</label>
+                    <input type="text" class="form-control" id="colab" name="username" required>
+                  </div>
+                  <div class="mb-3">
+                    <label for="pwd" class="form-label">Password:</label>
+                    <input type="password" class="form-control"   name="password" required>
+                  </div>
+                <div class="mb-3">
+                    <label for="pwd" class="form-label">Apelido:</label>
+                    <input type="text" class="form-control"   name="nickname" required>
+                  </div>
+
+                  <div class="mb-3">
+                    <label for="pwd" class="form-label">Tipo:</label>
+                    <input type="text" class="form-control"   name="tipo" required>
+                  </div>
+
+                  <button type="submit" class="btn btn-primary">Submit</button>
+                </form>
+
 
 
     </div>
   </div>
 </div>
-
+</div>
 
 </body>
 </html>

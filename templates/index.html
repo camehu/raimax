@@ -21,7 +21,7 @@
 
     <img src="http://web.raimaxfibra.com.br/wp-content/uploads/2021/11/logo.png" data-retina="http://web.raimaxfibra.com.br/wp-content/uploads/2021/11/logo.png" alt="logo raimax">
 
-    <form class="formulario" action="/login" method="post" autocomplete="off">
+    <form class="formulario" action="/validacpanel" method="post" autocomplete="off">
 		
 		<label for="name"><strong>EMAIL:</label> 
 		<input name="username" required="required" type="text"/>
@@ -29,9 +29,10 @@
 		<label for="name">SENHA:</label> 
 		<input name="password" id="senha" required="required" type="password"/>
 
-		<button id="botao" type="submit"  value="ENTRAR" value="Entrar">Entrar</button>
+		<button id="botao" type="submit"  value="ENTRAR" onclick="myspinner()" value="Entrar">Entrar</button>
 
-		
+		<div id="spnFooter" class="spinner-grow text-success" style="margin-left: 17rem; margin-top:2rem;display:none;" ></div>
+
 
 	</form>
 
@@ -44,6 +45,8 @@
 
 </body>
 
+
+{{login}}
 
 
 </html>
