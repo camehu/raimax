@@ -57,7 +57,7 @@ async def root(request: Request, id: str = Form(), username: str = Form(), passw
     sql = f"UPDATE `login` SET `id`='{id}',`colaborador`='{username}',`senha`='{password}',`nickname`='{nickname}',`tipo`='{tipo}' WHERE id = '{id}'"
     mycursor.execute(sql)
     conex.mydb.commit()
-    return templates.TemplateResponse("usuarios.html", {"request": request, "editar": mycursor.rowcount})
+    return  mycursor.rowcount
 
 
 @app.post("/deletar", response_class=HTMLResponse)
@@ -66,7 +66,7 @@ async def root(request: Request, id: str = Form()):
     sql = f"DELETE FROM login WHERE id = '{id}'"
     mycursor.execute(sql)
     conex.mydb.commit()
-    return mycursor.rowcount
+    return templates.TemplateResponse("usuarios.html", {"request": request, "deletado": mycursor.rowcount})
 
 
 @app.get("/aviso", response_class=HTMLResponse)
