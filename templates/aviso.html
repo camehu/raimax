@@ -22,11 +22,17 @@
             <li class="nav-item">
               <a class="nav-link" href="#">Olá, Suporte</a>
             </li>
+          <li class="nav-item">
+              <a class="nav-link" href="listaaviso">Lista-Avisos</a>
+            </li>
             <li class="nav-item">
               <a class="nav-link" href="aviso">Avisos</a>
             </li>
             <li class="nav-item">
               <a class="nav-link" href="usuarios">Usuarios</a>
+            </li>
+           <li class="nav-item">
+              <a class="nav-link" href="/">Sair</a>
             </li>
 
       </ul>
@@ -45,20 +51,18 @@
     <thead>
       <tr>
         <th>ID</th>
-        <th>Usuario</th>
-        <th>Apelido</th>
-        <th>Senha</th>
-         <th>Tipo</th>
-      </tr>
+        <th>Data</th>
+        <th>Problema</th>
+        <th>Ações</th>
+       </tr>
     </thead>
     <tbody>
-      {% for userlogin in users: %}
+      {% for lista in aviso: %}
           <tr>
-            <td>{{userlogin[0]}}</td>
-            <td>{{userlogin[1]}}</td>
-            <td>{{userlogin[2]}}</td>
-            <td>{{userlogin[3]}}</td>
-            <td> <a class="btn btn-primary btn-sm modal-trigger" data-bs-toggle="modal" data-bs-target="#myModal">Visualizar</a></td>
+            <td>{{lista[0]}}</td>
+            <td>{{lista[1]}}</td>
+            <td>{{lista[2]}}</td>
+           <td> <a class="btn btn-primary btn-sm modal-trigger" data-bs-toggle="modal" data-bs-target="#myModal">+ Informáções</a></td>
           </tr>
 
              <!-- Button to Open the Modal -->
@@ -76,7 +80,7 @@
 
                   <!-- Modal body -->
                   <div class="modal-body">
-
+                            {{lista[3]}}
 
                </div>
               </div>
@@ -104,7 +108,26 @@
       <!-- Modal body -->
       <div class="modal-body">
 
-          jjjjjjjjjjjjjjjjjjjjjjj
+          <form action="#" method="post">
+                       <div class="mb-1 mt-1">
+                         <label class="form-label">Data:</label>
+                            <input type="date" class="form-control "  name="idaviso" required>
+                         </div>
+
+                         <div class="mb-3 mt-3">
+                         <label class="form-label">Problema:</label>
+                           <input type="text" class="form-control"  name="username"  required>
+                          </div>
+
+                       <label for="comment">Descrição:</label>
+                       <textarea class="form-control" rows="5" id="comment" name="descricao"></textarea>
+
+                 <div class="mb-3 mt-3">
+                   <button type="submit" class="btn btn-warning">Salvar</button>
+                 </div>
+         </form>
+
+
       </div>
 
 
