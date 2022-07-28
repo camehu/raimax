@@ -43,7 +43,7 @@ async def usuarios(request: Request):
         return templates.TemplateResponse("usuarios.html", {"request": request, "login": myresult})
 
 
-@app.get("/painel")
+@app.get("/painel", response_class=HTMLResponse)
 async def painel(request: Request):
    return templates.TemplateResponse("painel.html", {"request": request})
 
