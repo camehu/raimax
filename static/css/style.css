@@ -7,15 +7,15 @@ img {
 
 main {
 	border: 1px solid white;
-	margin: 1% 28%;
+	margin: 1% 10%;
 	padding: 2% 0;
 	border-radius: 10px;
 	background-color: #9FB6CD;
 }
 
 input[type=text], textarea {
-	width: 90%;
-	padding: 8px 12px;
+	width: 50%;
+	padding: 1px 2px;
 	border: 2px solid #BEBEBE;
 	border-radius: 4px;
 	resize: vertical;

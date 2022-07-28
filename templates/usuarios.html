@@ -9,7 +9,7 @@
 
     <title>Usuarios - Portal</title>
 </head>
-<body>
+<body style="background-color:#004FC1;" >
 <nav class="navbar navbar-expand-sm bg-white navbar-white">
   <div class="container-fluid">
     <a class="navbar-brand" href="#">Raimax</a>
@@ -22,20 +22,25 @@
             <li class="nav-item">
               <a class="nav-link" href="#">Olá, Suporte</a>
             </li>
+
+           <li class="nav-item">
+              <a class="nav-link" href="listaviso">Lista-Avisos</a>
+            </li>
+
             <li class="nav-item">
               <a class="nav-link" href="aviso">Avisos</a>
             </li>
             <li class="nav-item">
               <a class="nav-link" href="usuarios">Usuarios</a>
             </li>
+          <li class="nav-item">
+              <a class="nav-link" href="/">Sair</a>
+            </li>
 
       </ul>
     </div>
   </div>
 </nav>
-
-{{ deletado }}
-{{ editado }}
 
 <div class="flex-container">
 
@@ -185,7 +190,7 @@
 
       <!-- Modal body -->
       <div class="modal-body">
-            <form action="usuarios" method="post">
+            <form action="inserir" method="post">
                   <div class="mb-3 mt-3">
                     <label class="form-label">Colaborador:</label>
                     <input type="text" class="form-control" id="colab" name="username" required>
