@@ -45,7 +45,7 @@ async def usuarios(request: Request):
 
 @app.get("/painel")
 async def painel(request: Request):
-   return RedirectResponse(url=f"painel", status_code=303)
+   return templates.TemplateResponse("painel.html", {"request": request})
 
 
 '''@app.post("/validacpanel")
@@ -56,7 +56,7 @@ async def validacpanel(request: Request, username: str = Form(), password: str =
     return templates.TemplateResponse("painel.html", {"request": request})'''
 
 
-@app.post("/inserir")
+@app.post("/inserir", response_class=HTMLResponse)
 async def inserir(request: Request, username: str = Form(), password: str = Form(), nickname: str = Form(), tipo: str = Form()):
     mycursor = conex.mydb.cursor()
     sql = f"INSERT INTO `login`(`colaborador`, `senha`, `nickname`, `tipo`) VALUES (%s, %s, %s, %s)"
