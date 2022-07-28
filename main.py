@@ -53,7 +53,7 @@ async def validacpanel(request: Request, username: str = Form(), password: str =
     mycursor = conex.mydb.cursor()
     mycursor.execute(f"SELECT * FROM login WHERE colaborador ='{username}' AND senha = '{password}' ")
     myresult = mycursor.fetchall()
-    return templates.TemplateResponse("painel.html", {"request": request, "valida": myresult})
+    return templates.TemplateResponse("painel.html", {"request": request})
 
 
 @app.post("/inserir")
