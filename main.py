@@ -43,7 +43,7 @@ async def usuarios(request: Request):
         return templates.TemplateResponse("usuarios.html", {"request": request, "login": myresult})
 
 
-@app.get("/painel", response_class=HTMLResponse)
+@app.get("/painel")
 async def painel(request: Request):
    return RedirectResponse(url=f"painel", status_code=303)
 
