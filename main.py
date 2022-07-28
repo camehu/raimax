@@ -45,7 +45,7 @@ async def usuarios(request: Request):
 
 @app.get("/painel", response_class=HTMLResponse)
 async def painel(request: Request):
-   return RedirectResponse(url=f"usuarios", status_code=303)
+   return RedirectResponse(url=f"painel", status_code=303)
 
 
 '''@app.post("/validacpanel")
