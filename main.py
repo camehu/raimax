@@ -2,8 +2,9 @@ from fastapi import FastAPI, Request, requests, Form
 from fastapi.responses import HTMLResponse, RedirectResponse
 from fastapi.staticfiles import StaticFiles
 from fastapi.templating import Jinja2Templates
-import conex
+from hash_token import hash, token
 
+import conex
 
 app = FastAPI()
 
@@ -16,7 +17,7 @@ app.mount("/static", StaticFiles(directory="static"), name="static")
 
 @app.get("/", response_class=HTMLResponse)
 async def root(request: Request):
-    return templates.TemplateResponse("index.html", {"request" : request})
+    return templates.TemplateResponse("index.html", {"request": request})
 
 
 @app.get("/suporte-interno", response_class=HTMLResponse)
@@ -24,7 +25,7 @@ async def root(request: Request):
     resp = conex.mydb.cursor()
     resp.execute("SELECT * FROM aviso")
     myresult = resp.fetchall()
-    return templates.TemplateResponse("suporte-interno.html", {"request" : request, "aviso": myresult})
+    return templates.TemplateResponse("suporte-interno.html", {"request": request, "aviso": myresult})
 
 
 @app.get("/listaviso", response_class=HTMLResponse)
@@ -37,10 +38,10 @@ async def listaviso(request: Request):
 
 @app.get("/usuarios", response_class=HTMLResponse)
 async def usuarios(request: Request):
-        mycursor = conex.mydb.cursor()
-        mycursor.execute("SELECT * FROM login")
-        myresult = mycursor.fetchall()
-        return templates.TemplateResponse("usuarios.html", {"request": request, "login": myresult})
+    mycursor = conex.mydb.cursor()
+    mycursor.execute("SELECT * FROM login")
+    myresult = mycursor.fetchall()
+    return templates.TemplateResponse("usuarios.html", {"request": request, "login": myresult})
 
 
 @app.get("/painel", response_class=HTMLResponse)
@@ -51,25 +52,35 @@ async def painel(request: Request):
 @app.post("/validacpanel")
 async def validacpanel(request: Request, username: str = Form(), password: str = Form()):
     mycursor = conex.mydb.cursor()
-    mycursor.execute(f"SELECT * FROM login WHERE colaborador ='{username}' AND senha = '{password}' ")
+    mycursor.execute(f"SELECT * FROM login WHERE nickname ='{username}' ")
     myresult = mycursor.fetchall()
-    return templates.TemplateResponse("painel.html", {"request": request, "valida": myresult})
+    for verify_user in myresult:
+        auth = hash.verifcar_hask(password, verify_user[2])
+        if auth:
+            # GERAR O TOKEM COM CARGA DE DADOS
+            return templates.TemplateResponse("painel.html", {"request": request})
+        else:
+            return templates.TemplateResponse("index.html", {"request": request})
 
 
 @app.post("/inserir")
-async def inserir(request: Request, username: str = Form(), password: str = Form(), nickname: str = Form(), tipo: str = Form()):
+async def inserir(request: Request, username: str = Form(), password: str = Form(), nickname: str = Form(),
+                  tipo: str = Form()):
     mycursor = conex.mydb.cursor()
+    cript_senha = hash.gerar_hash(password)
     sql = f"INSERT INTO `login`(`colaborador`, `senha`, `nickname`, `tipo`) VALUES (%s, %s, %s, %s)"
-    val = (username, password, nickname, tipo)
+    val = (username, cript_senha, nickname, tipo)
     mycursor.execute(sql, val)
     conex.mydb.commit()
     return RedirectResponse(url=f"usuarios", status_code=303)
 
 
 @app.post("/editar", response_class=HTMLResponse)
-async def editar(request: Request, id: str = Form(), username: str = Form(), password: str = Form(), nickname: str = Form(), tipo: str = Form()):
+async def editar(request: Request, id: str = Form(), username: str = Form(), password: str = Form(),
+                 nickname: str = Form(), tipo: str = Form()):
     mycursor = conex.mydb.cursor()
-    sql = f"UPDATE `login` SET `id`='{id}',`colaborador`='{username}',`senha`='{password}',`nickname`='{nickname}',`tipo`='{tipo}' WHERE id = '{id}'"
+    cript_senha = hash.gerar_hash(password)
+    sql = f"UPDATE `login` SET `id`='{id}',`colaborador`='{username}',`senha`='{cript_senha}',`nickname`='{nickname}',`tipo`='{tipo}' WHERE id = '{id}'"
     mycursor.execute(sql)
     conex.mydb.commit()
     return RedirectResponse(url=f"usuarios", status_code=303)
@@ -105,7 +116,8 @@ async def cad_aviso(request: Request, data: str = Form(), problema: str = Form()
 
 
 @app.post("/edit_aviso", response_class=HTMLResponse)
-async def edit_aviso(request: Request, idaviso: str = Form(), data_aviso: str = Form(), problema: str = Form(), descricao: str = Form()):
+async def edit_aviso(request: Request, idaviso: str = Form(), data_aviso: str = Form(), problema: str = Form(),
+                     descricao: str = Form()):
     mycursor = conex.mydb.cursor()
     sql = f"UPDATE `aviso` SET `idaviso`='{idaviso}',`data`='{data_aviso}',`problema`='{problema}',`descricao`='{descricao}' WHERE id = '{idaviso}'"
     mycursor.execute(sql)
