@@ -45,18 +45,18 @@ async def usuarios(request: Request):
 
 @app.get("/painel", response_class=HTMLResponse)
 async def painel(request: Request):
-   return templates.TemplateResponse("painel.html", {"request": request})
+    return templates.TemplateResponse("painel.html", {"request": request})
 
 
-'''@app.post("/validacpanel")
+@app.post("/validacpanel")
 async def validacpanel(request: Request, username: str = Form(), password: str = Form()):
     mycursor = conex.mydb.cursor()
     mycursor.execute(f"SELECT * FROM login WHERE colaborador ='{username}' AND senha = '{password}' ")
     myresult = mycursor.fetchall()
-    return templates.TemplateResponse("painel.html", {"request": request})'''
+    return templates.TemplateResponse("painel.html", {"request": request, "valida": myresult})
 
 
-@app.post("/inserir", response_class=HTMLResponse)
+@app.post("/inserir")
 async def inserir(request: Request, username: str = Form(), password: str = Form(), nickname: str = Form(), tipo: str = Form()):
     mycursor = conex.mydb.cursor()
     sql = f"INSERT INTO `login`(`colaborador`, `senha`, `nickname`, `tipo`) VALUES (%s, %s, %s, %s)"
