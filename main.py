@@ -51,23 +51,25 @@ async def painel(request: Request):
 
 @app.post("/validacpanel")
 async def validacpanel(request: Request, username: str = Form(), password: str = Form()):
-    cript_senha = hash.gerar_hash(password)
     mycursor = conex.mydb.cursor()
     mycursor.execute(f"SELECT * FROM login WHERE nickname ='{username}' ")
+    cript_senha = hash.gerar_hash(password)
     myresult = mycursor.fetchall()
     for verify_user in myresult:
-        auth = hash.verifcar_hask(cript_senha, verify_user[2])
-        if auth:
+        auth = hash.verifcar_hask(password, verify_user[2])
+    if not auth:
+        return templates.TemplateResponse("index.html", {"request": request})
+    else:
+        if myresult is None:
+            return templates.TemplateResponse("index.html", {"request": request})
+        else:
             # GERAR O TOKEM COM CARGA DE DADOS
             return templates.TemplateResponse("painel.html", {"request": request})
-        else:
-            return templates.TemplateResponse("index.html", {"request": request})
 
 
 @app.post("/inserir")
 async def inserir(request: Request, username: str = Form(), password: str = Form(), nickname: str = Form(),
                   tipo: str = Form()):
-
     mycursor = conex.mydb.cursor()
     cript_senha = hash.gerar_hash(password)
     sql = f"INSERT INTO `login`(`colaborador`, `senha`, `nickname`, `tipo`) VALUES (%s, %s, %s, %s)"
