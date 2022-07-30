@@ -7,4 +7,4 @@ mydb = mysql.connector.connect(
   database="heroku_a7f279a8e4d980e"
 )
 
-print(mydb)
+
