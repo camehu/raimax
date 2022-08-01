@@ -61,6 +61,8 @@ async def validacpanel(request: Request, username: str = Form(), password: str =
     mycursor.execute(f"SELECT * FROM login WHERE nickname ='{username}' ")
     myresult = mycursor.fetchall()
     lista = len(myresult)
+    mycursor.close()
+    
     if lista == 0:
         return RedirectResponse(url="/", status_code=303,)
     else:
