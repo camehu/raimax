@@ -16,6 +16,21 @@
 </head>
 
 <body style="background-color:#004FC1;">
+
+{%if user == 0 %}
+    <script type="text/javascript">
+         Swal.fire({
+          icon: 'error',
+          title: 'Oops...',
+          text: 'Usuario ou senha incorretos!'
+
+        })
+
+    </script>
+
+{% endif %}
+
+
 <main>
 
     <img src="http://web.raimaxfibra.com.br/wp-content/uploads/2021/11/logo.png" data-retina="http://web.raimaxfibra.com.br/wp-content/uploads/2021/11/logo.png" alt="logo raimax">

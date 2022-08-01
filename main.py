@@ -27,17 +27,17 @@ async def root(request: Request):
 
 @app.get("/suporte-interno", response_class=HTMLResponse)
 async def root(request: Request):
-    resp = conex.mydb.cursor()
-    resp.execute("SELECT * FROM aviso")
-    myresult = resp.fetchall()
+    mycursor = conex.mydb.cursor()
+    mycursor.execute("SELECT * FROM aviso")
+    myresult = mycursor.fetchall()
     return templates.TemplateResponse("suporte-interno.html", {"request": request, "aviso": myresult})
 
 
 @app.get("/listaviso", response_class=HTMLResponse)
 async def listaviso(request: Request):
-    resp = conex.mydb.cursor()
-    resp.execute("SELECT * FROM aviso")
-    myresult = resp.fetchall()
+    mycursor = conex.mydb.cursor()
+    mycursor.execute("SELECT * FROM aviso")
+    myresult = mycursor.fetchall()
     return templates.TemplateResponse("listaviso.html", {"request": request, "aviso": myresult})
 
 
