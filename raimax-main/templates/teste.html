@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Teste</title>
+    <script type="text/javascript" src="js/sweetalert2.js"></script>
+    <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+</head>
+<body style="background-color:#DCDCDC;">
+ {%if teste == 0 %}
+    <script type="text/javascript">
+         Swal.fire({
+          icon: 'error',
+          title: 'Oops...',
+          text: 'Usuario ou senha incorretos!'
+
+        })
+
+    </script>
+
+  {% else %}
+      <script type="text/javascript">
+
+         Swal.fire({
+          icon: 'success',
+          title: 'Usuario logado com Sucesso',
+          showConfirmButton: false,
+          timer: 2500
+        })
+    </script>
+
+   {% endif %}
+
+
+</body>
+</html>

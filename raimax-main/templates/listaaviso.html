@@ -14,7 +14,7 @@
 
 </head>
 
-<body >
+<body>
 
 <nav class="navbar navbar-expand-sm bg-white navbar-white">
   <div class="container-fluid">
@@ -52,10 +52,11 @@
         <th style="width:60%">Problema</th>
         <th style="width:20%">Informações</th>
     </tr>
- {% for user in aviso %}
+ {% for user in users %}
     <tr>
         <td>{{user[1]}}</td>
         <td>{{user[2]}}</td>
+        <td>{{user[3]}}</td>
         <td><button data-toggle="modal" data-target="#myModal">+ Informações</button></td>
     </tr>
 
@@ -73,7 +74,7 @@
         <!-- Modal body -->
         <div class="modal-body">
 
-         {{user[3]}}
+          Modal body.. {{user[3]}}
 
         </div>
 
@@ -88,6 +89,31 @@
  {% endfor %}
 
 </table>
+
+    <div style="margin-right: 3rem;">
+            <nav aria-label="Navegação de página" >
+                <ul class="pagination" >
+                  <li class="page-item">
+                    <a class="page-link" href="#" aria-label="Anterior">
+                      <span aria-hidden="true">&laquo;</span>
+                      <span class="sr-only">Anterior</span>
+                    </a>
+                  </li>
+                  <li class="page-item"><a class="page-link" href="#">1</a></li>
+                  <li class="page-item"><a class="page-link" href="#">2</a></li>
+                  <li class="page-item"><a class="page-link" href="#">3</a></li>
+                  <li class="page-item">
+                    <a class="page-link" href="#" aria-label="Próximo">
+                      <span aria-hidden="true">&raquo;</span>
+                      <span class="sr-only">Próximo</span>
+                    </a>
+                  </li>
+                </ul>
+            </nav>
+ </div>
+
+
+
 
 
 </body>

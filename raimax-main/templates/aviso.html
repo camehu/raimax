@@ -63,15 +63,15 @@
             <td>{{lista[0]}}</td>
             <td>{{lista[1]}}</td>
             <td>{{lista[2]}}</td>
-           <td> <a class="btn btn-secondary btn-sm modal-trigger" data-bs-toggle="modal" data-bs-target="#myModal">+ Informações</a>
-           <a class="btn btn-sm modal-trigger" data-bs-toggle="modal" data-bs-target="#myModalEdit">Editar</a>
-           <a class="btn  btn-sm modal-trigger" data-bs-toggle="modal" data-bs-target="#myModalDel">Deletar</a></td>
+           <td> <a class="btn btn-secondary btn-sm modal-trigger" data-bs-toggle="modal" data-bs-target="#myModal{{lista[0]}}">+ Informações</a>
+           <a class="btn btn-sm modal-trigger" data-bs-toggle="modal" data-bs-target="#myModalEdit{{lista[0]}}">Editar</a>
+           <a class="btn  btn-sm modal-trigger" data-bs-toggle="modal" data-bs-target="#myModalDel{{lista[0]}}">Deletar</a></td>
           </tr>
 
-             <!-- Button to Open the Modal -->
+             <!-- MAIS INFORMAÇÕES -->
 
             <!-- The Modal -->
-            <div class="modal" id="myModal">
+            <div class="modal" id="myModal{{lista[0]}}">
               <div class="modal-dialog">
                 <div class="modal-content">
 
@@ -92,7 +92,7 @@
 
 
       <!-- Editar AVISO -->
-<div class="modal" id="myModalEdit">
+<div class="modal" id="myModalEdit{{lista[0]}}">
   <div class="modal-dialog">
     <div class="modal-content">
 
@@ -108,12 +108,12 @@
           <form action="cad_aviso" method="POST">
                        <div class="mb-1 mt-1">
                          <label class="form-label">Data:</label>
-                            <input type="text" class="form-control "  name="idaviso" value="{{lista[0]}}" readonly>
+                            <input type="text" class="form-control "  name="idaviso" value="{{lista[0]}}" readonly >
                          </div>
 
                          <div class="mb-3 mt-3">
                          <label class="form-label">Data:</label>
-                           <input type="date" class="form-control"  name="data" value="{{lista[1]}}" readonly>
+                           <input type="date" class="form-control"  name="data" value="{{lista[1]}}" readonly >
                           </div>
 
                        <div class="mb-3 mt-3">
@@ -139,7 +139,7 @@
 
 
        <!-- DELETAR AVISO -->
-<div class="modal" id="myModalDel">
+<div class="modal" id="myModalDel{{lista[0]}}">
   <div class="modal-dialog">
     <div class="modal-content">
 
@@ -155,12 +155,12 @@
           <form action="del_aviso" method="POST">
                        <div class="mb-1 mt-1">
                          <label class="form-label">id:</label>
-                            <input type="text" class="form-control "  name="idaviso" value="{{lista[0]}}" disabled="">
+                            <input type="text" class="form-control "  name="idaviso" value="{{lista[0]}}" readonly>
                          </div>
 
                          <div class="mb-3 mt-3">
-                         <label class="form-label">Data:</label>
-                           <input type="teste" class="form-control"  name="data" value="{{lista[2]}}" disabled="">
+                         <label class="form-label">Problema:</label>
+                           <input type="teste" class="form-control"  name="data" value="{{lista[2]}}" readonly>
                           </div>
 
                  <div class="mb-3 mt-3">
@@ -214,7 +214,7 @@
                           </div>
 
                        <label for="comment">Descrição:</label>
-                       <textarea class="form-control" rows="5" id="comment" name="descricao"></textarea>
+                       <textarea class="form-control" rows="5" id="descricao" name="descricao" required></textarea>
 
                  <div class="mb-3 mt-3">
                    <button type="submit" class="btn btn-warning">Salvar</button>
