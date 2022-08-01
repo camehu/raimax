@@ -15,6 +15,11 @@ app.mount("/static", StaticFiles(directory="static"), name="static")
 
 # ROTAS PARA INSERIR, EDITAR E DELETAR USUARIOS
 
+@app.get("/teste", response_class=HTMLResponse)
+async def root(request: Request):
+    return templates.TemplateResponse("teste.html", {"request": request, "teste": 0})
+
+
 @app.get("/", response_class=HTMLResponse)
 async def root(request: Request):
     return templates.TemplateResponse("index.html", {"request": request})
@@ -55,16 +60,11 @@ async def validacpanel(request: Request, username: str = Form(), password: str =
     mycursor.execute(f"SELECT * FROM login WHERE nickname ='{username}' ")
     cript_senha = hash.gerar_hash(password)
     myresult = mycursor.fetchall()
-    for verify_user in myresult:
-        auth = hash.verifcar_hask(password, verify_user[2])
-    if not auth:
-        return templates.TemplateResponse("index.html", {"request": request})
+    lista = len(myresult)
+    if lista == 0:
+        return RedirectResponse(url="/", status_code=303,)
     else:
-        if myresult is None:
-            return templates.TemplateResponse("index.html", {"request": request})
-        else:
-            # GERAR O TOKEM COM CARGA DE DADOS
-            return templates.TemplateResponse("painel.html", {"request": request})
+        return RedirectResponse(url="painel", status_code=303,)
 
 
 @app.post("/inserir")
@@ -91,9 +91,9 @@ async def editar(request: Request, id: str = Form(), username: str = Form(), pas
 
 
 @app.post("/deletar", response_class=HTMLResponse)
-async def deletar(request: Request, id: str = Form()):
+async def deletar(request: Request, idaviso: str = Form()):
     mycursor = conex.mydb.cursor()
-    sql = f"DELETE FROM login WHERE id = '{id}'"
+    sql = f"DELETE FROM login WHERE id = '{idaviso}'"
     mycursor.execute(sql)
     conex.mydb.commit()
     return RedirectResponse(url=f"usuarios", status_code=303)
