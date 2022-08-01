@@ -2,17 +2,15 @@
     display: flex;
     background-color:#004FC1;
 	margin:0%;
-	width:800wv;
+	width:auto;
 	height:100vh;
 	justify-content: center;
 	align-items: start;
-	
-
 
 }
 
 #divcentro{
-	width:800px;
+	width:1000px;
 	height: auto;
 	background-color: #FFFFFF;
 	padding:1em;
@@ -35,6 +33,9 @@ h4{
 	
 }
 
-
+.table{
+	
+	width: 100px;
+}
 
 

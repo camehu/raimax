@@ -1,3 +1,6 @@
-<script type="text/javascript">
-  alert('Olá mundo!');
-</script>
+
+function succsses(){
+	
+	alert('Olá mundo!');
+	
+}

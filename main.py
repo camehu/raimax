@@ -56,15 +56,26 @@ async def painel(request: Request):
 
 @app.post("/validacpanel")
 async def validacpanel(request: Request, username: str = Form(), password: str = Form()):
+
     mycursor = conex.mydb.cursor()
     mycursor.execute(f"SELECT * FROM login WHERE nickname ='{username}' ")
-    cript_senha = hash.gerar_hash(password)
     myresult = mycursor.fetchall()
     lista = len(myresult)
     if lista == 0:
         return RedirectResponse(url="/", status_code=303,)
     else:
-        return RedirectResponse(url="painel", status_code=303,)
+        for nome in myresult:
+            if nome[3] == username:
+                senha = hash.verifcar_hask(password, nome[2])
+                if senha:
+                    return RedirectResponse(url="painel", status_code=303,)
+                else:
+                    return RedirectResponse(url="/", status_code=303, )
+            else:
+                return RedirectResponse(url="painel", status_code=303,)
+
+
+
 
 
 @app.post("/inserir")
@@ -103,9 +114,9 @@ async def deletar(request: Request, idaviso: str = Form()):
 
 @app.get("/aviso", response_class=HTMLResponse)
 async def aviso(request: Request):
-    resp = conex.mydb.cursor()
-    resp.execute("SELECT * FROM aviso")
-    myresult = resp.fetchall()
+    mycursor = conex.mydb.cursor()
+    mycursor.execute("SELECT * FROM aviso")
+    myresult = mycursor.fetchall()
     return templates.TemplateResponse("aviso.html", {"request": request, "aviso": myresult})
 
 
