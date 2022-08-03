@@ -6,13 +6,11 @@
 	height:100vh;
 	justify-content: center;
 	align-items: start;
-	
-
 
 }
 
 #divcentro{
-	width:auto;
+	width:1000px;
 	height: auto;
 	background-color: #FFFFFF;
 	padding:1em;
@@ -35,6 +33,9 @@ h4{
 	
 }
 
-
+.table{
+	
+	width: 100px;
+}
 
 

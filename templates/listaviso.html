@@ -18,7 +18,7 @@
 
 <nav class="navbar navbar-expand-sm bg-white navbar-white">
   <div class="container-fluid">
-    <a class="navbar-brand" href="#">Raimax</a>
+    <a class="navbar-brand" href="#"> </a>
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#collapsibleNavbar">
       <span class="navbar-toggler-icon"></span>
     </button>
@@ -29,10 +29,10 @@
               <a class="nav-link" href="#">Olá, Suporte</a>
             </li>
             <li class="nav-item">
-              <a class="nav-link" href="aviso">Avisos</a>
+              <a class="nav-link" href="#"></a>
             </li>
             <li class="nav-item">
-              <a class="nav-link" href="#">Usuarios</a>
+              <a class="nav-link" href="#"></a>
             </li>
 
       </ul>
@@ -56,11 +56,11 @@
     <tr>
         <td>{{user[1]}}</td>
         <td>{{user[2]}}</td>
-        <td><button data-toggle="modal" data-target="#myModal">+ Informações</button></td>
+        <td><button data-toggle="modal" data-target="#myModal{{user[0]}}">+ Informações</button></td>
     </tr>
 
     <!-- The Modal -->
-  <div class="modal" id="myModal">
+  <div class="modal" id="myModal{{user[0]}}">
     <div class="modal-dialog">
       <div class="modal-content">
 
