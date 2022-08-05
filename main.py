@@ -37,7 +37,6 @@ async def listaviso(request: Request):
     mycursor = conex.mydb.cursor()
     mycursor.execute("SELECT * FROM aviso")
     myresult = mycursor.fetchall()
-
     return templates.TemplateResponse("listaviso.html", {"request": request, "aviso": myresult})
 
 
@@ -46,7 +45,6 @@ async def usuarios(request: Request):
     mycursor = conex.mydb.cursor()
     mycursor.execute("SELECT * FROM login")
     myresult = mycursor.fetchall()
-
     return templates.TemplateResponse("usuarios.html", {"request": request, "login": myresult})
 
 
@@ -55,9 +53,9 @@ async def painel(request: Request):
     tkn = blacklist.blacklist
     for tk in tkn:
         if len(tk) == 0:
-            return templates.TemplateResponse("index.html", {"request": request, 'token': 'Token Expirado' })
+            return templates.TemplateResponse("index.html", {"request": request})
         else:
-            return templates.TemplateResponse("painel.html", {"request": request, 'token': tk})
+            return templates.TemplateResponse("painel.html", {"request": request})
 
 
 @app.post("/validacpanel")
@@ -68,18 +66,18 @@ async def validacpanel(request: Request, username: str = Form(), password: str =
 
     lista = len(myresult)
     if lista == 0:
-        return RedirectResponse(url="/", status_code=303, )
+        return templates.TemplateResponse("index.html", {"request": request})
     else:
         for nome in myresult:
             if nome[3] == username:
                 senha = hash.verifcar_hask(password, nome[2])
                 if senha:
                     blacklist.blacklist.append(token.token(nome[0], nome[1], [3]))
-                    return RedirectResponse(url="painel", status_code=303, )
+                    return templates.TemplateResponse("painel.html", {"request": request})
                 else:
                     return RedirectResponse(url="/", status_code=303, )
             else:
-                return RedirectResponse(url="painel", status_code=303, )
+                return templates.TemplateResponse("index.html", {"request": request})
 
 
 @app.post("/inserir")
@@ -125,8 +123,7 @@ async def aviso(request: Request):
         return templates.TemplateResponse("aviso.html", {"request": request, "aviso": myresult})
 
     except:
-        erroLogin = "Seu login Expirou"
-        templates.TemplateResponse("index.html", {"request": request, "teste": erroLogin})
+        templates.TemplateResponse("index.html", {"request": request})
 
 
 @app.post("/cad_aviso")
@@ -136,7 +133,6 @@ async def cad_aviso(request: Request, data: str = Form(), problema: str = Form()
     val = (data, problema, descricao)
     mycursor.execute(sql, val)
     conex.mydb.commit()
-
     return RedirectResponse(url=f"aviso", status_code=303)
 
 
@@ -147,7 +143,6 @@ async def edit_aviso(request: Request, idaviso: str = Form(), data_aviso: str = 
     sql = f"UPDATE `aviso` SET `idaviso`='{idaviso}',`data`='{data_aviso}',`problema`='{problema}',`descricao`='{descricao}' WHERE id = '{idaviso}'"
     mycursor.execute(sql)
     conex.mydb.commit()
-
     return RedirectResponse(url=f"aviso", status_code=303)
 
 
@@ -157,7 +152,6 @@ async def del_aviso(request: Request, idaviso: str = Form()):
     sql = f"DELETE FROM aviso WHERE idaviso = '{idaviso}'"
     mycursor.execute(sql)
     conex.mydb.commit()
-
     return RedirectResponse(url=f"aviso", status_code=303)
 
 
