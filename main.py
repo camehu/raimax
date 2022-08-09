@@ -24,7 +24,7 @@ async def root(request: Request):
 async def validacpanel(request: Request, username: str = Form(), password: str = Form(), ):
     conex.mydb.reconnect()
     cursor = conex.mydb.cursor()
-    sql = f"SELECT nickname, senha FROM `login` WHERE nickname = '{username}'"
+    sql = "SELECT nickname, senha FROM `login` WHERE nickname = '{username}'"
     cursor.execute(sql)
     myresult = cursor.fetchall()
     cursor.close()
@@ -41,7 +41,7 @@ async def validacpanel(request: Request, username: str = Form(), password: str =
 async def usuarios(request: Request):
     conex.mydb.reconnect()
     cursor = conex.mydb.cursor()
-    sql = f"SELECT * FROM login"
+    sql = "SELECT * FROM login"
     cursor.execute( sql )
     myresult = cursor.fetchall()
     cursor.close()
@@ -67,7 +67,7 @@ async def inserir(username: str = Form(), nickname: str = Form(), password: str 
 async def deletar(request: Request, idaviso: str = Form()):
     conex.mydb.reconnect()
     cursor = conex.mydb.cursor()
-    sql = f"DELETE FROM login WHERE idlogin = '{idaviso}'"
+    sql = "DELETE FROM login WHERE idlogin = '{idaviso}'"
     cursor.execute( sql )
     cursor.close()
     cursor.close()
@@ -81,7 +81,7 @@ async def editar(request: Request, id: str = Form(), username: str = Form(), pas
     conex.mydb.reconnect()
     cursor = conex.mydb.cursor()
     cript_senha = hash_token.hash.gerar_hash( password )
-    sql = f"UPDATE `login` SET `colaborador`='{username}',`nickname`='{nickname}', `senha`='{cript_senha}' ,`tipo`='{tipo}' WHERE idlogin = '{id}'"
+    sql = "UPDATE `login` SET `colaborador`='{username}',`nickname`='{nickname}', `senha`='{cript_senha}' ,`tipo`='{tipo}' WHERE idlogin = '{id}'"
     cursor.execute( sql )
     cursor.close()
     conex.mydb.close()
