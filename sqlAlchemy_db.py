@@ -1,9 +1,12 @@
 import sqlalchemy.types
 from sqlalchemy import create_engine, Column, Integer, String
+from sqlalchemy.databases import postgres
 from sqlalchemy.orm import sessionmaker
 from sqlalchemy.ext.declarative import declarative_base
+from sqlalchemy.dialects import postgresql
+import psycopg2
 
-engine = create_engine('mysql://b6914c23389c6b:cd8edf81@us-cdbr-east-06.cleardb.net/heroku_a7f279a8e4d980e', echo=True)
+engine = create_engine('postgresql://otojieihxizijz:8aa3d812701ffa71cebc9cad575daab25520cdb309711d3266bb9a67159ff034@ec2-3-225-110-188.compute-1.amazonaws.com:5432/d4ps43fkmtvvam', echo=True)
 
 Session = sessionmaker(bind=engine)
 session = Session()
