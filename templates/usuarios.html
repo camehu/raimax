@@ -65,20 +65,20 @@
     <tbody>
       {% for usr in login %}
           <tr>
-            <td>{{usr[0]}}</td>
-            <td>{{usr[1]}}</td>
-            <td>{{usr[2]}}</td>
-            <td>{{usr[3]}}</td>
-            <td>{{usr[4]}}</td>
-            <td> <a class="btn btn-secondary btn-sm modal-trigger" data-bs-toggle="modal" data-bs-target="#myModal{{usr[0]}}">Visualizar</a>
-            <button type="submit" class="btn btn" data-bs-toggle="modal" data-bs-target="#myModalDELETAR{{usr[0]}}">Deletar</button></td>
+            <td>{{usr.idsuario}}</td>
+            <td>{{usr.usuario}}</td>
+            <td>{{usr.apelido}}</td>
+            <td>{{usr.senha}}</td>
+            <td>{{usr.tipo}}</td>
+            <td> <a class="btn btn-secondary btn-sm modal-trigger" data-bs-toggle="modal" data-bs-target="#myModal{{usr.idsuario}}">Visualizar</a>
+            <button type="submit" class="btn btn" data-bs-toggle="modal" data-bs-target="#myModalDELETAR{{usr.idsuario}}">Deletar</button></td>
 
           </tr>
 
              <!-- EDITAR -->
 
             <!-- The Modal -->
-            <div class="modal" id="myModal{{usr[0]}}">
+            <div class="modal" id="myModal{{usr.idsuario}}">
               <div class="modal-dialog">
                 <div class="modal-content">
 
@@ -93,25 +93,25 @@
                                     <form action="editar" method="post">
                                         <div class="mb-1 mt-1">
                                             <label class="form-label">ID:</label>
-                                            <input type="text" class="form-control "  name="id" value={{usr[0]}} required>
+                                            <input type="text" class="form-control "  name="id" value="{{usr.idsuario}}" required>
                                           </div>
 
                                           <div class="mb-3 mt-3">
                                             <label class="form-label">Colaborador:</label>
-                                            <input type="text" class="form-control"  name="username" value={{usr[1]}} required>
+                                            <input type="text" class="form-control"  name="username" value="{{usr.usuario}}" required>
                                           </div>
                                           <div class="mb-3">
                                             <label for="pwd" class="form-label">Apelido:</label>
-                                            <input type="text" class="form-control"   name="nickname" value={{usr[2]}} required >
+                                            <input type="text" class="form-control"   name="nickname" value="{{usr.apelido}}" required >
                                           </div>
                                         <div class="mb-3">
                                             <label for="pwd" class="form-label">Password:</label>
-                                            <input type="text" class="form-control"   name="password" value={{usr[3]}} required>
+                                            <input type="text" class="form-control"   name="password" value="{{usr.senha}}" required>
                                           </div>
 
                                           <div class="mb-3">
                                             <label for="pwd" class="form-label">Tipo:</label>
-                                            <input type="text" class="form-control"   name="tipo" value={{usr[4]}} required>
+                                            <input type="text" class="form-control"   name="tipo" value="{{usr.tipo}}" required>
                                           </div>
 
                                           <button type="submit" class="btn btn-warning">Editar</button>
@@ -126,7 +126,7 @@
        <!-- Modal DELETAR-->
 
      <!-- The Modal -->
-            <div class="modal" id="myModalDELETAR{{usr[0]}}">
+            <div class="modal" id="myModalDELETAR{{usr.idsuario}}">
               <div class="modal-dialog">
                 <div class="modal-content">
 
@@ -141,12 +141,12 @@
                                     <form action="deletar" method="post">
                                         <div class="mb-1 mt-1">
                                             <label class="form-label">ID:</label>
-                                            <input type="text" class="form-control "  name="idaviso" value={{usr[0]}}>
+                                            <input type="text" class="form-control "  name="iduser" value="{{usr.idsuario}}">
                                           </div>
 
                                           <div class="mb-3 mt-3">
                                             <label class="form-label">Colaborador:</label>
-                                            <input type="text" class="form-control"  name="username" value={{usr[1]}}>
+                                            <input type="text" class="form-control"  name="username" value="{{usr.usuario}}">
                                           </div>
 
 

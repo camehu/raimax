@@ -5,6 +5,7 @@ from fastapi.staticfiles import StaticFiles
 from fastapi.templating import Jinja2Templates
 import conex
 import hash_token.hash
+import sqlAlchemy_db
 
 app = FastAPI()
 
@@ -15,138 +16,108 @@ app.mount( "/static", StaticFiles( directory="static" ), name="static" )
 
 # TELA USUARIOS
 
-@app.get("/", response_class=HTMLResponse)
+@app.get( "/", response_class=HTMLResponse )
 async def root(request: Request):
-    return templates.TemplateResponse("index.html", {"request": request})
+    return templates.TemplateResponse( "index.html", {"request": request} )
 
 
-@app.post("/validacpanel")
+@app.get( "/painel", response_class=HTMLResponse )
+async def root(request: Request):
+    return templates.TemplateResponse( "painel.html", {"request": request} )
+
+
+@app.post( "/validacpanel" )
 async def validacpanel(request: Request, username: str = Form(), password: str = Form(), ):
-    conex.mydb.reconnect()
-    cursor = conex.mydb.cursor()
-    sql = "SELECT nickname, senha FROM `login` WHERE nickname = '{username}'"
-    cursor.execute(sql)
-    myresult = cursor.fetchall()
-    cursor.close()
-    conex.mydb.close()
-    for usr in myresult:
-        very_pass = hash_token.hash.verifcar_hask(password, usr[1])
-        if very_pass:
-            return RedirectResponse( url=f"usuarios", status_code=303 )
-        else:
-            return RedirectResponse( url=f"/", status_code=303 )
+    admin_user = sqlAlchemy_db.session.query(sqlAlchemy_db.User).filter(sqlAlchemy_db.User.apelido == f'{username}').one()
+    very_pass = hash_token.hash.verifcar_hask(password, admin_user.senha)
+    if very_pass:
+        return RedirectResponse( url=f"painel", status_code=303)
+    else:
+        return RedirectResponse( url=f"/", status_code=303 )
 
 
 @app.get( "/usuarios", response_class=HTMLResponse )
 async def usuarios(request: Request):
-    conex.mydb.reconnect()
-    cursor = conex.mydb.cursor()
-    sql = "SELECT * FROM login"
-    cursor.execute( sql )
-    myresult = cursor.fetchall()
-    cursor.close()
-    conex.mydb.close()
-    return templates.TemplateResponse( "usuarios.html", {"request": request, "login": myresult} )
+    query = sqlAlchemy_db.session.query(sqlAlchemy_db.User).all()
+    return templates.TemplateResponse( "usuarios.html", {"request": request, "login": query} )
 
 
 @app.post( "/inserir" )
 async def inserir(username: str = Form(), nickname: str = Form(), password: str = Form(),
                   tipo: str = Form()):
-    conex.mydb.reconnect()
-    cursor = conex.mydb.cursor()
-    cript_senha = hash_token.hash.gerar_hash( password )
-    sql = "INSERT INTO `login`(`colaborador`, `nickname`, `senha`, `tipo`) VALUES (%s, %s, %s, %s)"
-    val = (username, nickname, cript_senha, tipo)
-    cursor.execute( sql, val )
-    cursor.close()
-    conex.mydb.close()
+    pass_hash = hash_token.hash.gerar_hash(password)
+    user = sqlAlchemy_db.User( usuario=f'{username}', apelido=f'{nickname}', senha=f'{pass_hash}', tipo=f'{tipo}' )
+    sqlAlchemy_db.session.add( user )
+    sqlAlchemy_db.session.commit()
     return RedirectResponse( url=f"usuarios", status_code=303 )
 
 
 @app.post( "/deletar", response_class=HTMLResponse )
-async def deletar(request: Request, idaviso: str = Form()):
-    conex.mydb.reconnect()
-    cursor = conex.mydb.cursor()
-    sql = "DELETE FROM login WHERE idlogin = '{idaviso}'"
-    cursor.execute( sql )
-    cursor.close()
-    cursor.close()
-    conex.mydb.close()
+async def deletar(request: Request, iduser: str = Form()):
+    del_user = sqlAlchemy_db.session.query(sqlAlchemy_db.User).filter(sqlAlchemy_db.User.idsuario == f'{iduser}' ).one()
+    sqlAlchemy_db.session.delete(del_user)
+    sqlAlchemy_db.session.commit()
     return RedirectResponse( url=f"usuarios", status_code=303 )
 
 
 @app.post( "/editar", response_class=HTMLResponse )
-async def editar(request: Request, id: str = Form(), username: str = Form(), password: str = Form(),
-                 nickname: str = Form(), tipo: str = Form()):
-    conex.mydb.reconnect()
-    cursor = conex.mydb.cursor()
-    cript_senha = hash_token.hash.gerar_hash( password )
-    sql = "UPDATE `login` SET `colaborador`='{username}',`nickname`='{nickname}', `senha`='{cript_senha}' ,`tipo`='{tipo}' WHERE idlogin = '{id}'"
-    cursor.execute( sql )
-    cursor.close()
-    conex.mydb.close()
+async def editar(request: Request, id: str = Form(), username: str = Form(),  nickname: str = Form(), password: str = Form(),
+                 tipo: str = Form()):
+    pass_hash = hash_token.hash.gerar_hash(password)
+    admin_user = sqlAlchemy_db.session.query(sqlAlchemy_db.User).filter(sqlAlchemy_db.User.idsuario == f'{id}').one()
+    admin_user.usuario = username
+    admin_user.apelido = nickname
+    admin_user.senha = pass_hash
+    admin_user.tipo = tipo
+    sqlAlchemy_db.session.add(admin_user)
+    sqlAlchemy_db.session.commit()
     return RedirectResponse( url=f"usuarios", status_code=303 )
 
 
 # TELE AVISOS
 
-@app.get("/aviso", response_class=HTMLResponse )
+@app.get( "/aviso", response_class=HTMLResponse )
 async def aviso(request: Request):
-    conex.mydb.reconnect()
-    cursor = conex.mydb.cursor()
-    sql = f"SELECT * FROM aviso"
-    cursor.execute( sql )
-    myresult = cursor.fetchall()
-    cursor.close()
-    conex.mydb.close()
-    return templates.TemplateResponse( "aviso.html", {"request": request, "aviso": myresult} )
+    query = sqlAlchemy_db.session.query(sqlAlchemy_db.Aviso).all()
+    return templates.TemplateResponse( "aviso.html", {"request": request, "aviso": query} )
 
 
-@app.post("/cad_aviso")
+@app.post( "/cad_aviso" )
 async def cad_aviso(request: Request, data: str = Form(), problema: str = Form(), descricao: str = Form()):
-    conex.mydb.reconnect()
-    cursor = conex.mydb.cursor()
-    sql = "INSERT INTO `aviso`(`data`, `problema`, `descricao`) VALUES (%s, %s, %s)"
-    val = (data, problema, descricao)
-    cursor.execute(sql, val)
-    cursor.close()
-    conex.mydb.close()
-    return RedirectResponse(url=f"aviso", status_code=303)
+    aviso = sqlAlchemy_db.Aviso( data=f'{data}', problema=f'{problema}', descricao=f'{descricao}' )
+    sqlAlchemy_db.session.add( aviso )
+    sqlAlchemy_db.session.commit()
+    return RedirectResponse( url=f"aviso", status_code=303 )
 
 
-@app.post("/del_aviso", response_class=HTMLResponse)
+@app.post( "/del_aviso", response_class=HTMLResponse )
 async def del_aviso(request: Request, idaviso: str = Form()):
-    conex.mydb.reconnect()
-    cursor = conex.mydb.cursor()
-    sql = f"DELETE FROM aviso WHERE idaviso = '{idaviso}'"
-    cursor.execute(sql)
-    cursor.close()
-    conex.mydb.close()
-    return RedirectResponse(url=f"aviso", status_code=303)
+    aviso = sqlAlchemy_db.session.query(sqlAlchemy_db.Aviso).filter(sqlAlchemy_db.Aviso.idaviso == f'{idaviso}').one()
+    sqlAlchemy_db.session.delete(aviso)
+    sqlAlchemy_db.session.commit()
+    return RedirectResponse( url=f"aviso", status_code=303 )
 
 
-@app.post("/edit_aviso", response_class=HTMLResponse)
-async def edit_aviso(request: Request, idaviso: str = Form(), data_aviso: str = Form(), problema: str = Form(),
+@app.post( "/edit_aviso", response_class=HTMLResponse )
+async def edit_aviso(request: Request, data_aviso: str = Form(), problema: str = Form(),
                      descricao: str = Form()):
-    conex.mydb.reconnect()
-    cursor = conex.mydb.cursor()
-    sql = f"UPDATE `aviso` SET `data`='{data_aviso}',`problema`='{problema}',`descricao`='{descricao}' WHERE idaviso = '{idaviso}'"
-    cursor.execute(sql)
-    cursor.close()
-    conex.mydb.close()
-    return RedirectResponse(url=f"aviso", status_code=303)
+    aviso = sqlAlchemy_db.Aviso( data=f'{data_aviso}', problema=f'{problema}', descricao=f'{descricao}' )
+    sqlAlchemy_db.session.add( aviso )
+    sqlAlchemy_db.session.commit()
+
+    return RedirectResponse( url=f"aviso", status_code=303 )
 
 
-@app.get("/listaviso", response_class=HTMLResponse)
+@app.get( "/listaviso", response_class=HTMLResponse )
 async def listaviso(request: Request):
     conex.mydb.reconnect()
     cursor = conex.mydb.cursor()
     sql = "SELECT * FROM aviso"
-    cursor.execute(sql)
+    cursor.execute( sql )
     myresult = cursor.fetchall()
     cursor.close()
     conex.mydb.close()
-    return templates.TemplateResponse("listaviso.html", {"request": request, "aviso": myresult})
+    return templates.TemplateResponse( "listaviso.html", {"request": request, "aviso": myresult} )
 
 
 if __name__ == '__mail__':
