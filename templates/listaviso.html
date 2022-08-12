@@ -29,11 +29,9 @@
               <a class="nav-link" href="#">Olá, Suporte</a>
             </li>
             <li class="nav-item">
-              <a class="nav-link" href="#"></a>
+              <a class="nav-link" href="#">Sair</a>
             </li>
-            <li class="nav-item">
-              <a class="nav-link" href="#"></a>
-            </li>
+            
 
       </ul>
     </div>
@@ -54,13 +52,13 @@
     </tr>
  {% for user in aviso %}
     <tr>
-        <td>{{user[1]}}</td>
-        <td>{{user[2]}}</td>
-        <td><button data-toggle="modal" data-target="#myModal{{user[0]}}">+ Informações</button></td>
+        <td>{{user.data}}</td>
+        <td>{{user.problema}}</td>
+        <td><button data-toggle="modal" data-target="#myModal{{user.idaviso}}">+ Informações</button></td>
     </tr>
 
     <!-- The Modal -->
-  <div class="modal" id="myModal{{user[0]}}">
+  <div class="modal" id="myModal{{user.idaviso}}">
     <div class="modal-dialog">
       <div class="modal-content">
 
@@ -73,7 +71,7 @@
         <!-- Modal body -->
         <div class="modal-body">
 
-         {{user[3]}}
+         {{user.descricao}}
 
         </div>
 
