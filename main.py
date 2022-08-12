@@ -110,14 +110,8 @@ async def edit_aviso(request: Request, data_aviso: str = Form(), problema: str =
 
 @app.get( "/listaviso", response_class=HTMLResponse )
 async def listaviso(request: Request):
-    conex.mydb.reconnect()
-    cursor = conex.mydb.cursor()
-    sql = "SELECT * FROM aviso"
-    cursor.execute( sql )
-    myresult = cursor.fetchall()
-    cursor.close()
-    conex.mydb.close()
-    return templates.TemplateResponse( "listaviso.html", {"request": request, "aviso": myresult} )
+    query = sqlAlchemy_db.session.query( sqlAlchemy_db.Aviso ).all()
+    return templates.TemplateResponse( "listaviso.html", {"request": request, "aviso": query})
 
 
 if __name__ == '__mail__':
