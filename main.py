@@ -1,9 +1,8 @@
-import mysql
 from fastapi import FastAPI, Request, requests, Form
 from fastapi.responses import HTMLResponse, RedirectResponse
 from fastapi.staticfiles import StaticFiles
 from fastapi.templating import Jinja2Templates
-import conex
+
 import hash_token.hash
 import sqlAlchemy_db
 
@@ -21,9 +20,17 @@ async def root(request: Request):
     return templates.TemplateResponse( "index.html", {"request": request} )
 
 
+@app.get("/new_layout", response_class=HTMLResponse )
+async def root(request: Request):
+    return templates.TemplateResponse( "new_layout.html", {"request": request} )
+
+
 @app.get( "/painel", response_class=HTMLResponse )
 async def root(request: Request):
     return templates.TemplateResponse( "painel.html", {"request": request} )
+
+
+
 
 
 @app.post( "/validacpanel" )
