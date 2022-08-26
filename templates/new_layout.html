@@ -4,6 +4,7 @@
   <title>Portal de Avisos</title>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
+
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet">
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
 </head>
@@ -12,23 +13,23 @@
 <h1 style="text-align: center;margin-top:1rem; color:#ffffff;">PORTAL DE AVISOS</h1>
 
 <div class="d-flex justify-content-start mb-3" >
-    <div class="p-2"><div class="p-2"><img class="img-fluid" src="{{ url_for('static', path='img/loudspeaker-ga51467874_1280.png') }}" alt="aviso" style="width:450px;height:450px; margin-top:15px;margin-left:15%;"></div>
+    <div class="p-2"><img class="img-fluid" src="{{ url_for('static', path='img/loudspeaker-ga51467874_1280.png') }}" alt="aviso" style="width:450px;height:450px; margin-top:15px;"> </div>
 	
     <div class="d-flex justify-content-end ;" style="width:210px;height: 350px; padding:1em; margin-left:30%;margin-top: 5em; box-shadow: 2px 2px 2px 2px #1F87FF; background-color:#1F87FF; opacity: 85%;">
 	
 					<form  action="/validacpanel" method="post" style="margin-top:1em;">
 					    <img class="img-fluid" src="https://web.raimaxfibra.com.br/wp-content/uploads/2021/11/logo.png">
 					  <div class="mb-3 mt-3">
-						<label for="email" class="form-label" style="color:#93D30A">Email:</label>
-						<input type="email" class="form-control" id="email" placeholder="Enter email" name="username">
+						<label for="text" class="form-label" style="color:#93D30A">Email:</label>
+						<input type="text" class="form-control"  placeholder="Enter o usuário" name="username" required>
 					  </div>
 					  <div class="mb-3">
 						<label for="pwd" class="form-label" style="color:#93D30A">Password:</label>
-						<input type="password" class="form-control" id="pwd" placeholder="Enter password" name="password">
+						<input type="password" class="form-control" id="pwd" placeholder="Enter password" name="password" required>
 					  </div>			  				  
 					  					 				  
 					  <div class="d-grid gap-3">
-						  <button type="button" class="btn btn-primary btn-block" style="background-color:#93D30A; border: none;">LOGIN</button>
+						  <button type="submit" class="btn btn-primary btn-block" style="background-color:#93D30A; border: none;">LOGIN</button>
 						  
 </div>
 					</form>
