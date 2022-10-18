@@ -12,6 +12,7 @@
 
 </head>
 <body style="background-color:#004FC1">
+
 <nav class="navbar navbar-expand-sm bg-white navbar-white">
   <div class="container-fluid">
     <a class="navbar-brand" href="#">Raimax</a>
@@ -215,7 +216,7 @@
       <!-- Modal body -->
       <div class="modal-body">
 
-          <form action="cad_aviso" method="POST">
+          <form action="/cad_aviso" method="POST">
                        <div class="mb-1 mt-1">
                          <label class="form-label">Data:</label>
                             <input type="datetime-local" class="form-control "  name="data" required>
@@ -294,5 +295,10 @@
       });
   });
   </script>
+
+
+{{aviso}}
+{{aviso2}}
+{{aviso3}}
 </body>
 </html>
