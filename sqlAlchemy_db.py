@@ -1,12 +1,12 @@
 import sqlalchemy.types
 from sqlalchemy import create_engine, Column, Integer, String
-from sqlalchemy.databases import postgres
+from sqlalchemy.databases import mysql
 from sqlalchemy.orm import sessionmaker
 from sqlalchemy.ext.declarative import declarative_base
-from sqlalchemy.dialects import postgresql
+import sqlalchemy.dialects
 import psycopg2
 
-engine = create_engine('postgresql://otojieihxizijz:8aa3d812701ffa71cebc9cad575daab25520cdb309711d3266bb9a67159ff034@ec2-3-225-110-188.compute-1.amazonaws.com:5432/d4ps43fkmtvvam', echo=True)
+engine = create_engine('sqlite:///db.sqlite3', echo=True)
 
 Session = sessionmaker(bind=engine)
 session = Session()
@@ -31,8 +31,8 @@ class Aviso(Base):
 
     idaviso = Column( Integer, primary_key=True, autoincrement=True )
     data = Column(sqlalchemy.types.DateTime)
-    problema = Column( String(100) )
-    descricao = Column( String(500) )
+    problema = Column( String(1000) )
+    descricao = Column( String(1000) )
 
 
 Base.metadata.create_all(engine)

@@ -10,13 +10,14 @@
 }
 
 #divcentro{
-	width:1000px;
+	width:auto;
 	height: auto;
-	background-color: #FFFFFF;
-	padding:1em;
+	background-color: #006400;
+	padding:2em;
 	margin-top:5em;
 	border-radius: 5px;
 	box-shadow: 2px 2px #DCDCDC;
+	
 	
 	
 }

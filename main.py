@@ -30,9 +30,6 @@ async def root(request: Request):
     return templates.TemplateResponse( "painel.html", {"request": request} )
 
 
-
-
-
 @app.post( "/validacpanel" )
 async def validacpanel(request: Request, username: str = Form(), password: str = Form(), ):
     admin_user = sqlAlchemy_db.session.query(sqlAlchemy_db.User).filter(sqlAlchemy_db.User.apelido == f'{username}').one()
@@ -94,7 +91,7 @@ async def cad_aviso(request: Request, data: str = Form(), problema: str = Form()
     aviso = sqlAlchemy_db.Aviso( data=f'{data}', problema=f'{problema}', descricao=f'{descricao}' )
     sqlAlchemy_db.session.add( aviso )
     sqlAlchemy_db.session.commit()
-    return RedirectResponse( url=f"aviso", status_code=303 )
+    return RedirectResponse( url=f"aviso.html", status_code=303 )
 
 
 @app.post( "/del_aviso", response_class=HTMLResponse )
@@ -102,7 +99,7 @@ async def del_aviso(request: Request, idaviso: str = Form()):
     aviso = sqlAlchemy_db.session.query(sqlAlchemy_db.Aviso).filter(sqlAlchemy_db.Aviso.idaviso == f'{idaviso}').one()
     sqlAlchemy_db.session.delete(aviso)
     sqlAlchemy_db.session.commit()
-    return RedirectResponse( url=f"aviso", status_code=303 )
+    return RedirectResponse( url=f"aviso.html", status_code=303 )
 
 
 @app.post( "/edit_aviso", response_class=HTMLResponse )
@@ -112,7 +109,7 @@ async def edit_aviso(request: Request, data_aviso: str = Form(), problema: str =
     sqlAlchemy_db.session.add( aviso )
     sqlAlchemy_db.session.commit()
 
-    return RedirectResponse( url=f"aviso", status_code=303 )
+    return RedirectResponse( url=f"aviso.html", status_code=303 )
 
 
 @app.get( "/listaviso", response_class=HTMLResponse )

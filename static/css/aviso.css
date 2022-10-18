@@ -13,7 +13,7 @@ h2{
 
 td, th{
     border: 1px solid black;
-    padding: 5px;
+    padding: 0.5px;
     border-radius: 5px;
     text-align: center;
 }
@@ -23,10 +23,10 @@ tr:hover {background-color: #D6EEEE;}
 table{
     border: 1px solid black;
     margin: 3% 15% 3% 15%;
-    width:70%;
+
     background-color: #9FB6CD;
     border-radius: 5px;
-    height:460px;
+    height:auto;
 }
 
 button {
