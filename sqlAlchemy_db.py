@@ -30,7 +30,7 @@ class Aviso(Base):
     __tablename__ = 'aviso'
 
     idaviso = Column( Integer, primary_key=True, autoincrement=True )
-    data = Column(sqlalchemy.types.DateTime)
+    data = Column(String(1000))
     problema = Column( String(1000) )
     descricao = Column( String(1000) )
 
