@@ -9,10 +9,10 @@
 
 }
 
-#divcentro{
+#divcentroUser, #divcentroAviso{
 	width:auto;
 	height: auto;
-	background-color: #006400;
+	background-color: #ffffff;
 	padding:2em;
 	margin-top:5em;
 	border-radius: 5px;
